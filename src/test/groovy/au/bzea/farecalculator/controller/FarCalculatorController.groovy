@@ -18,7 +18,7 @@ class FareCalculatorControllerTest extends Specification {
 "5, 23-01-2023 08:02:00, OFF, Stop1, Company1, Bus37, 4111111111111111\r\n" +
 "6, 24-01-2023 16:30:00, OFF, Stop2, Company1, Bus37, 5500005555555559"
 
-    def "FareCalculatorController fares calaluate"() { 
+    def "FareCalculatorController fares calculate"() { 
         given: "a csv file"
         def csvData = data
 

@@ -33,7 +33,8 @@ class CsvConverterTest extends Specification {
 
         then: "I am returned the expect number of records"
         logger.info("record size: " + records.size())
-        assert records.size() == 6
+        // includes header
+        assert records.size() == 7
     }
 
     def "CsvConverterTest convert to array"() { 

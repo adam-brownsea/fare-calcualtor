@@ -29,6 +29,7 @@ public class CsvConverter {
         
         // Loop thru records adding to json list
         for (CSVRecord record : records) {
+            if (record.get(0).equals("ID")) { continue;}
             TapInputLine inputLine = new TapInputLine();
 
             inputLine.ID = Integer.parseInt(record.get(0));

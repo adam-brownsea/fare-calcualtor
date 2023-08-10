@@ -1,10 +1,21 @@
 package au.bzea.farecalculator.util;
 
+import au.bzea.farecalculator.model.TapInputLine;
+import au.bzea.farecalculator.model.TapOutputLine;
 import au.bzea.farecalculator.constants.Constants;
+import au.bzea.farecalculator.controller.FareCalculatorController;
 
-public class GenerateOutput {
+import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Logger;
 
-    public static ArrayList<TapOutputLine> createOutputLines(ArrayList<TapInputLine> tapInputLines) {
+
+public class GenerateOutputLines {
+    private static Logger logger = Logger.getLogger(GenerateOutputLines.class.getName());
+    
+    public static ArrayList<TapOutputLine> createOutputLines(ArrayList<TapInputLine> inputLines) {
         // Loop thru sorted input - Write to output class (json)
         ArrayList<TapOutputLine> outputLines = new ArrayList<TapOutputLine>();
 
@@ -80,7 +91,7 @@ public class GenerateOutput {
             }
 
         });
-
+        return outputLines;
         
     }
 }
