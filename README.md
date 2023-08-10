@@ -1,2 +1,2 @@
-# fare-calcualtor
+# fare-calculator
 Demo Fare calaculator prject
