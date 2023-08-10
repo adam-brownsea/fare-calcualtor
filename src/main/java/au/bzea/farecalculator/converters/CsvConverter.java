@@ -8,9 +8,6 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.csv.CSVPrinter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.function.Consumer;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.logging.Logger;
@@ -20,9 +17,12 @@ public class CsvConverter {
     private static Logger logger = Logger.getLogger(CsvConverter.class.getName());
     
     private static List<CSVRecord> readCsvFromString(String csvData) throws IOException {
-        CSVParser parser = new CSVParser(new StringReader(csvData), CSVFormat.DEFAULT.withFirstRecordAsHeader());
-        return parser.getRecords();
+        CSVParser parser = new CSVParser(new StringReader(csvData), CSVFormat.DEFAULT);
+        List<CSVRecord> records = parser.getRecords();
+        parser.close();;
+        return records;
     }
+    
     private static ArrayList<TapInputLine> convertToArray(List<CSVRecord> records) {
         ArrayList<TapInputLine> tapInputLines = new ArrayList<TapInputLine>();
 
@@ -62,11 +62,12 @@ public class CsvConverter {
         List<CSVRecord> csvRecords = new ArrayList<>();
 
         // Define format based on output headers
-        CSVFormat csvFormat = CSVFormat.DEFAULT
-                .withHeader("Started", "Finished", "DurationSecs", "FromStopId", "ToStopId", 
-                "ChargeAmount", "CompanyId", "BusID", "PAN", "Status")  
-                .withDelimiter(','); 
-        
+        String header = String.join(",", 
+                "Started", "Finished", "DurationSecs", "FromStopId", "ToStopId", 
+                "ChargeAmount", "CompanyId", "BusID", "PAN", "Status");
+        CSVRecord csvHeader = CSVFormat.DEFAULT.parse(new StringReader(header)).getRecords().get(0);
+        csvRecords.add(csvHeader);
+                
         for (TapOutputLine outputLine : outputLines) {
             String csvString = String.join(",", 
                 outputLine.Started,
@@ -102,6 +103,7 @@ public class CsvConverter {
         try {
             List<CSVRecord> records = convertToCSVRecords(outputLines);
 
+            logger.info("Records: " + records.size());
             return writeStringFromCsv(records);
         } catch (IOException e) {
             e.printStackTrace();

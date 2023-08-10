@@ -1,7 +1,5 @@
 package au.bzea.farecalculator.model;
 
-import java.util.Date;
-
 public class TapInputLine { 
     public int ID;
 
