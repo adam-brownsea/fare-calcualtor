@@ -1,2 +1,2 @@
 # fare-calcualtor
-Demo Fae calaculator prject
+Demo Fare calaculator prject
