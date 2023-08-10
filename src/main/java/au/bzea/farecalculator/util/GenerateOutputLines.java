@@ -3,7 +3,6 @@ package au.bzea.farecalculator.util;
 import au.bzea.farecalculator.model.TapInputLine;
 import au.bzea.farecalculator.model.TapOutputLine;
 import au.bzea.farecalculator.constants.Constants;
-import au.bzea.farecalculator.controller.FareCalculatorController;
 
 import java.util.ArrayList;
 import java.text.ParseException;
@@ -54,7 +53,12 @@ public class GenerateOutputLines {
                         outputLine.Status.equals(Constants.INCOMPLETE)) {
                         outputLine.Finished = inputLine.DateTimeUTC;
                         outputLine.ToStopId = inputLine.StopId;
-                        outputLine.Status = Constants.COMPLETED;
+
+                        if (outputLine.ToStopId.equals(outputLine.FromStopId)) {
+                            outputLine.Status = Constants.CANCELLED;
+                        } else {
+                            outputLine.Status = Constants.COMPLETED;
+                        }
 
                         // set duration seconds
                         try {
